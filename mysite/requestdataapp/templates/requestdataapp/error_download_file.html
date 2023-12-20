@@ -1,0 +1,10 @@
+{% extends 'requestdataapp/base.html' %}
+
+{% block title %}
+    File upload error
+{% endblock %}
+
+{% block body %}
+    <h1>File name:{{ file_name }} upload error</h1>
+    <h3>File ({{ file_name }}:{{ file_size }}:Mb) size greater than 1 MB</h3>
+{% endblock %}

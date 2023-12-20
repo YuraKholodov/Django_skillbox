@@ -1,0 +1,38 @@
+{% extends 'myauth/base.html' %}
+{% load cache %}
+
+{% block title %}
+    About me
+{% endblock %}
+
+
+{% block body %}
+    <h1>User info</h1>
+    {% if user.is_authenticated %}
+        {% cache 300 userinfo user.username %}
+            {% if user.profile.avatar %}
+                <h3>Avatar:</h3>
+                <img src="{{ user.profile.avatar.url }}" alt="{{ user.profile.avatar.name }}">
+            {% else %}
+                <h3>No avatar uploaded yet</h3>
+            {% endif %}
+
+            <h2>Detail</h2>
+            <p>Username: {{ user.username }}</p>
+            <p>First name: {{ user.first_name }}</p>
+            <p>Last name: {{ user.last_name }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p>Bio: {{ user.profile.bio }}</p>
+
+            <div>
+                <a href="{% url "myauth:update-profile" pk=user.profile.pk %}">Update profile</a>
+            </div>
+            <br>
+            <div>
+                <a href="{% url "myauth:user-list" %}">List of users</a>
+            </div>
+        {% endcache %}
+    {% else %}
+        <h2>User is anonymous</h2>
+    {% endif %}
+{% endblock %}
